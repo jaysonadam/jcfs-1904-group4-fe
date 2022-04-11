@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux"
 
-import { Card, FormControl, InputGroup } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Button } from "@mui/material";
 import axios from "../../Config/axios";
 import { ArrowBack } from "@mui/icons-material";
@@ -26,11 +26,14 @@ function Address() {
         postal_code: '',
         is_default: '1'
     });
+    
     const user_id = useSelector((state) => state.auth.user_id);
+    console.log(user_id)
 
     const getAddress = async () => {
         try {
             const res = await axios.get(`/address/${user_id}`)
+            console.log(res)
             const { data } = res;
             setAddress(data.address)
         } catch (error) {
@@ -99,9 +102,9 @@ function Address() {
                         <Card.Body>
                             <h5 className="ml-2">Which address to edit ?</h5>
                             <select className="form-control mt-3">
-                            {/* {address.map((add) => 
-                                <option key={add.address_id} value={add.address_id}>{add.detail_address}</option>
-                            )} */}
+                                {address.map((add) => 
+                                    <option key={add.address_id} value={add.address_id}>{add.detail_address}</option>
+                                )}
                             </select>
                             <input type="text" className="form-control mt-2" placeholder="Full Address" aria-label="Username" aria-describedby="basic-addon1"
                                    onChange={handleChange} name="detail_address"
